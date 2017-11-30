@@ -4,6 +4,7 @@ import lsg.armor.ArmorItem;
 import lsg.armor.BlackWitchVeil;
 import lsg.armor.DragonSlayerLeggings;
 import lsg.armor.RingedKnightArmor;
+import lsg.bags.Collectible;
 import lsg.buffs.rings.Ring;
 
 import static java.lang.String.format;
@@ -194,6 +195,37 @@ public class Hero extends Character {
     protected float computeBuff() {
         return this.getTotalBuff();
     }
+
+    /**
+     * Recherche l'armure passée en paramètre dans le sac et l'équipe sur le slot désigné (cela le retire du sac)
+     * @param item L'armure à équiper
+     * @param slot L'emplacement où l'équiper
+     */
+    public void equip(ArmorItem item, int slot) {
+        for (Collectible c : this.getBagItems()) {
+            if (c.equals(item)) {
+                this.pullOut(c);
+                System.out.println(" and equips it !");
+                this.setArmorItem(item, slot);
+            }
+        }
+    }
+
+    /**
+     * Recherche le ring passé en paramètre dans le sac et l'équipe sur le slot désigné (cela le retire du sac)
+     * @param ring Le ring à équiper
+     * @param slot L'emplacement où l'équiper
+     */
+    public void equip(Ring ring, int slot) {
+        for (Collectible c : this.getBagItems()) {
+            if (c.equals(ring)) {
+                this.pullOut(c);
+                System.out.println(" and equips it !");
+                this.setRing(ring, slot);
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
 

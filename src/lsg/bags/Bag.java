@@ -41,7 +41,10 @@ public class Bag {
 
     // Méthodes
 
-
+    /**
+     * Ajoute un item dans le sac s'il y a la place
+     * @param item L'item à ajouter
+     */
     public void push(Collectible item) {
         if ((this.weight + item.getWeight()) <= capacity) {
             this.items.add(item);
@@ -49,6 +52,11 @@ public class Bag {
         }
     }
 
+    /**
+     * Retire un item du sac
+     * @param item L'item à retirer
+     * @return L'item retiré, null s'il ne s'y trouvait pas
+     */
     public Collectible pop(Collectible item) {
         Collectible toRemove = null;
 
@@ -61,10 +69,19 @@ public class Bag {
         return toRemove;
     }
 
+    /**
+     * Indique si l'item passé en paramètre se trouve bien dans le sac
+     * @param item
+     * @return true si l'item se trouve bien dans le sac, false sinon
+     */
     public boolean contains(Collectible item) {
         return this.items.contains(item);
     }
 
+    /**
+     * Retourne un tableau contenant les items du sac
+     * @return Un tableau contenant les items du sac
+     */
     public Collectible[] getItems() {
         Collectible[] toReturn = new Collectible[this.items.size()];
         int i = 0;
@@ -77,6 +94,10 @@ public class Bag {
         return toReturn;
     }
 
+    /**
+     * Affiche le contenu du sac
+     * @return Une chaine contenant le contenu du sac
+     */
     public String toString() {
         String toReturn = this.getClass().getSimpleName() + " [ " + this.getItems().length + " items | " + this.getWeight() + "/" + this.getCapacity() + " kg ]\n";
         if (this.getItems().length <= 0) {
@@ -91,23 +112,24 @@ public class Bag {
         return toReturn;
     }
 
+    /**
+     * Transfère le contenu du sac source dans le sac de destination dans la limite de capacité du dernier.
+     * Les items qui n'ont pas pu être transféré restent dans le sac source
+     * @param from Le sac source
+     * @param into Le sac de destination
+     */
     public static void transfer(Bag from, Bag into) {
-        Collectible toTransfert;
-        boolean ableToTransfert = true;
-
-        for (int i = 0; i<from.getItems().length && ableToTransfert==true; i++) {
-            toTransfert = from.pop(from.getItems()[i]);
-            if (into.getWeight()+toTransfert.getWeight() < into.getCapacity()){
+        for (Collectible toTransfert : from.getItems()) {
                 into.push(toTransfert);
-            }
-            else
-                from.push(toTransfert);
-                ableToTransfert = false;
+            if (into.contains(toTransfert))
+                from.pop(toTransfert);
         }
     }
 
+
     public static void main(String[] args) {
         SmallBag smallBag = new SmallBag();
+        MediumBag mediumBag = new MediumBag();
         smallBag.push(new BlackWitchVeil());
         smallBag.push(new Hamburger());
         smallBag.push(new Sword());
@@ -120,6 +142,12 @@ public class Bag {
         System.out.println("Pop sur " + dr.toString() + "\n");
 
         System.out.println(smallBag.toString());
+
+        System.out.println("Sac 1 :");
+        System.out.println("Sac 2 :");
+        System.out.println("Sac 2 après transfert :");
+        System.out.println("Sac 1 après transfert :");
+
     }
 
 }
