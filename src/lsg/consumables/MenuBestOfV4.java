@@ -29,10 +29,7 @@ public class MenuBestOfV4 extends LinkedHashSet<Consumable> {
 
     // Méthodes
 
-    /**
-     * Surcharge de toString
-     * @return
-     */
+
     public String toString(){
         String toReturn = "MenuBestOfV4 :\n";
         int i = 1;

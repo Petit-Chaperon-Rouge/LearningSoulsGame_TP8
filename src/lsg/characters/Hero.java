@@ -75,7 +75,6 @@ public class Hero extends Character {
         return somme;
     }
 
-
     /**
      * Equipe un anneau à un slot du héro
      * @param ring L'anneau à équiper
@@ -165,6 +164,7 @@ public class Hero extends Character {
     // Méthodes
 
 
+
     /**
      * Surcharge de toString
      * @return Les statistiques de l'armure
@@ -175,7 +175,6 @@ public class Hero extends Character {
         for (int i=0; i<MAX_ARMOR_PIECES; i++){
             if (this.armor[i]!=null)
                 stringArmor += format(" %2d:%-30s", i+1, this.armor[i].toString());
-                //stringArmor += i+1 + ":" + this.armor[i].toString() + "\t";
             else
                 stringArmor += format(" %2d:%-30s", i+1, "empty");
         }
@@ -184,7 +183,6 @@ public class Hero extends Character {
 
         return stringArmor;
     }
-
 
     @Override
     protected float computeProtection() {
@@ -224,6 +222,22 @@ public class Hero extends Character {
                 this.setRing(ring, slot);
             }
         }
+    }
+
+    /**
+     * Affiche l'anneau du personnage
+     */
+    public void printRings() {
+        String toReturn = "RINGS ";
+
+        for (int i=0; i<MAX_RINGS; i++){
+            if (this.rings[i]!=null)
+                toReturn += format(" %2d:%-30s", i+1, this.rings[i].toString());
+            else
+                toReturn += format(" %2d:%-30s", i+1, "empty");
+        }
+
+        System.out.println(toReturn);
     }
 
 

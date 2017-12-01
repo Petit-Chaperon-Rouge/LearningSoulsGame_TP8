@@ -28,10 +28,7 @@ public class MenuBestOfV3 extends HashSet<Consumable>{
 
     // Méthodes
 
-    /**
-     * Surcharge de toString
-     * @return
-     */
+
     public String toString(){
         String toReturn = "MenuBestOfV3 :\n";
         int i = 1;

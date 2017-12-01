@@ -7,6 +7,9 @@ import lsg.consumables.Consumable;
 import lsg.consumables.drinks.Drink;
 import lsg.consumables.food.Food;
 import lsg.consumables.repair.RepairKit;
+import lsg.exceptions.StaminaEmptyException;
+import lsg.exceptions.WeaponBrokenException;
+import lsg.exceptions.WeaponNullException;
 import lsg.helpers.Dice;
 import lsg.weapons.Weapon;
 
@@ -250,9 +253,13 @@ public abstract class Character {
      * Le personnage attaque.
      * Réarrange les statistiques du personnage et de l'arme
      * @return (int) La valeur des dégâts
+     * @throws WeaponNullException Si aucune arme n'est équipé
      */
-    private int attackWith(Weapon weapon) {
+    private int attackWith(Weapon weapon) throws WeaponNullException, WeaponBrokenException, StaminaEmptyException {
         int damage = 0;
+
+        if (weapon == null)
+            throw new WeaponNullException();
 
         weapon.use();
 
@@ -261,10 +268,13 @@ public abstract class Character {
             damage = (int) (weapon.getMinDamage() + (((weapon.getMaxDamage()-weapon.getMinDamage()) * precision)/100));
 
         }
+        else
+            throw new WeaponBrokenException(weapon);
 
         if (this.getStamina() < weapon.getStamCost()){
             damage = damage/(int)(this.getStamina()-weapon.getStamCost())/100;
             this.setStamina(0);
+            throw new StaminaEmptyException();
         }
         else {
             this.setStamina(this.getStamina() - weapon.getStamCost());
@@ -276,8 +286,9 @@ public abstract class Character {
     /**
      * Action d'attaquer
      * @return (int) La valeur des dégâts
+     * @throws WeaponNullException Si aucune arme n'est équipé
      */
-    public int attack() {
+    public int attack() throws WeaponNullException, WeaponBrokenException, StaminaEmptyException {
         return attackWith(this.getWeapon());
     }
 
@@ -340,12 +351,20 @@ public abstract class Character {
         }
 
         else if (consumable instanceof RepairKit){
-            this.repairWeaponWith((RepairKit)consumable);
+            try {
+                this.repairWeaponWith((RepairKit)consumable);
+            } catch (WeaponNullException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void repairWeaponWith(RepairKit kit){
-        System.out.println(this.getName() + " repairs " + this.getWeapon().toString() + " with " + kit.toString());
+    private void repairWeaponWith(RepairKit kit) throws WeaponNullException {
+
+        if (this.getWeapon()==null)
+            throw new WeaponNullException();
+
+        System.out.println(this.getName() + " repairs " + this.getWeapon() + " with " + kit.toString());
         this.getWeapon().repairWith(kit);
     }
 
@@ -454,6 +473,17 @@ public abstract class Character {
      */
     public void printBag() {
         System.out.println("BAG : " + this.bag.toString());
+    }
+
+    /**
+     * Affiche le consommable du personnage
+     */
+    public void printConsumable() {
+        System.out.println("CONSUMABLE : " + this.getConsumable());
+    }
+
+    public void printWeapon() {
+        System.out.println("WEAPON : " + this.getWeapon());
     }
 
     protected abstract float computeProtection();

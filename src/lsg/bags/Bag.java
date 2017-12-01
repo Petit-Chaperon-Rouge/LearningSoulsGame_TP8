@@ -71,7 +71,7 @@ public class Bag {
 
     /**
      * Indique si l'item passé en paramètre se trouve bien dans le sac
-     * @param item
+     * @param item l'item à rechercher
      * @return true si l'item se trouve bien dans le sac, false sinon
      */
     public boolean contains(Collectible item) {

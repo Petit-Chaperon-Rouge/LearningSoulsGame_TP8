@@ -14,7 +14,7 @@ public class RingOfDeath extends Ring{
 	/**
 	 * Retourne le buff si la vie du personnage est inférieur à la moitié de sa
 	 * vie maximum
-	 * @return (float) la valeur du buff si vie<50% sinon 0
+	 * @return (float) la valeur du buff si la vie est infèrieure à 50% sinon 0
 	 */
 	@Override
 	public float computeBuffValue() {

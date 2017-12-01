@@ -25,10 +25,7 @@ public class MenuBestOfV1 {
 
     // Méthodes
 
-    /**
-     * Surcharge de toString
-     * @return
-     */
+
     public String toString(){
         String toReturn = "MenuBestOfV1 :\n";
         for (int i = 0; i<menu.length; i++){

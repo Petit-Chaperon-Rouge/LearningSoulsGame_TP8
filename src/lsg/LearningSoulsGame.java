@@ -11,6 +11,9 @@ import lsg.characters.Monster;
 import lsg.consumables.Consumable;
 import lsg.consumables.MenuBestOfV4;
 import lsg.consumables.food.Hamburger;
+import lsg.exceptions.StaminaEmptyException;
+import lsg.exceptions.WeaponBrokenException;
+import lsg.exceptions.WeaponNullException;
 import lsg.weapons.Claw;
 import lsg.weapons.Sword;
 import lsg.weapons.Weapon;
@@ -29,7 +32,9 @@ public class LearningSoulsGame {
     public static final String BULLET_POINT = "\u2219 ";
 
 
+
     // Méthodes
+
 
 
     private void title() {
@@ -38,15 +43,18 @@ public class LearningSoulsGame {
         System.out.println("#############################\n");
     }
 
-
     private void refresh() {
         hero.printStats();
-        System.out.println(BULLET_POINT + hero.getWeapon().toString());
-        System.out.println(BULLET_POINT + hero.getConsumable().toString());
+        System.out.println(hero.armorToString());
+        hero.printRings();
+        hero.printConsumable();
+        hero.printWeapon();
+        hero.printBag();
+        System.out.println();
+
         monster.printStats();
 
     }
-
 
     private void fight1v1() {
         title();
@@ -61,10 +69,22 @@ public class LearningSoulsGame {
                 System.out.println("\nHero's action for next move : (1) attack | (2) consume > ");
                 int action = scanner.nextInt();
                 if (action == 1) {
-                    attack = hero.attack();
+                    try {
+                        attack = hero.attack();
+                    } catch (WeaponNullException e) {
+                        attack = 0;
+                        System.out.println("WARNING : no weapon has been equiped !!!");
+                    } catch (WeaponBrokenException e) {
+                        attack = 0;
+                        System.out.println("WARNING : " + e.getMessage());
+                    } catch (StaminaEmptyException e) {
+                        attack = 0;
+                        System.out.println("ACTION HAS NO EFFECT: no more stamina !!!");
+                    }
+
                     damage = monster.getHitWith(attack);
 
-                    System.out.println("\n" + hero.getName() + " attacks " + monster.getName() + " with " + hero.getWeapon().getName() + " (ATTACK:" + attack + " | DMG : " + damage + ")\n");
+                    System.out.println("\n" + hero.getName() + " attacks " + monster.getName() + " with " + hero.getWeapon() + " (ATTACK:" + attack + " | DMG : " + damage + ")\n");
                 }
                 else if (action == 2) {
                     hero.consume();
@@ -72,10 +92,22 @@ public class LearningSoulsGame {
                 heroTurn = false;
             }
             else {
-                attack = monster.attack();
+                try {
+                    attack = monster.attack();
+                } catch (WeaponNullException e) {
+                    attack = 0;
+                    System.out.println("WARNING : no weapon has been equiped !!!");
+                } catch (WeaponBrokenException e) {
+                    attack = 0;
+                    System.out.println("WARNING : " + e.getMessage());
+                } catch (StaminaEmptyException e) {
+                    attack = 0;
+                    System.out.println("ACTION HAS NO EFFECT: no more stamina !!!");
+                }
+
                 damage = hero.getHitWith(attack);
 
-                System.out.println("\n" + monster.getName() + " attacks " + hero.getName() + " with " + monster.getWeapon().getName() + " (ATTACK:" + attack + " | DMG : " + damage + ")\n");
+                System.out.println("\n" + monster.getName() + " attacks " + hero.getName() + " with " + monster.getWeapon() + " (ATTACK:" + attack + " | DMG : " + damage + ")\n");
 
                 heroTurn = true;
             }
@@ -91,7 +123,6 @@ public class LearningSoulsGame {
         }
 
     }
-
 
     private void init() {
         Sword sword = new Sword();
@@ -109,18 +140,17 @@ public class LearningSoulsGame {
         hero = new Hero();
         hero.getHitWith(99);
         hero.setWeapon(new Weapon("Grosse Arme", 0,0,1000,100));
-        hero.attack();
-        hero.printStats();
-    }
-
-    private void aTable() {
-        MenuBestOfV4 menu = new MenuBestOfV4();
-        for (Consumable consumable : menu){
-            hero.use(consumable);
-            hero.printStats();
-            System.out.println("Apres utilisation : " + consumable.toString());
-            System.out.println(hero.getWeapon().toString());
+        try {
+            hero.attack();
+        }catch (WeaponNullException e){
+            e.printStackTrace();
+        } catch (WeaponBrokenException e) {
+            e.printStackTrace();
+        } catch (StaminaEmptyException e) {
+            e.printStackTrace();
         }
+
+        hero.printStats();
     }
 
     private void play_v1() {
@@ -144,15 +174,18 @@ public class LearningSoulsGame {
         fight1v1();
     }
 
+    private void testExceptions() {
+        hero.setWeapon(null);
+        this.fight1v1();
+    }
+
 
     public static void main(String[] args) {
 
         LearningSoulsGame game = new LearningSoulsGame();
 
-        //game.play_v1();
-        //game.play_v2();
-        game.play_v3();
-        //game.createExhaustedHero();
-        //game.aTable();
+        game.init();
+        game.testExceptions();
+
     }
 }
