@@ -4,17 +4,8 @@
     <bookmark url="file://$PROJECT_DIR$/src/lsg/characters/Character.java" line="408" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91fa4085-dc7f-4436-bd90-1e1b7b1189b5" name="Default" comment="TP6: to 6.3">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lsg/exceptions/ConsumeEmptyException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lsg/exceptions/ConsumeException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lsg/exceptions/ConsumeNullException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lsg/exceptions/ConsumeRepairNullWeaponException.java" />
+    <list default="true" id="91fa4085-dc7f-4436-bd90-1e1b7b1189b5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lsg/LearningSoulsGame.java" afterPath="$PROJECT_DIR$/src/lsg/LearningSoulsGame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lsg/bags/Bag.java" afterPath="$PROJECT_DIR$/src/lsg/bags/Bag.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lsg/characters/Character.java" afterPath="$PROJECT_DIR$/src/lsg/characters/Character.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lsg/consumables/Consumable.java" afterPath="$PROJECT_DIR$/src/lsg/consumables/Consumable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lsg/weapons/Weapon.java" afterPath="$PROJECT_DIR$/src/lsg/weapons/Weapon.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1042,7 +1033,7 @@
       <workItem from="1512130527363" duration="36000" />
       <workItem from="1512130566042" duration="27000" />
       <workItem from="1512130595422" duration="9552000" />
-      <workItem from="1513868723208" duration="4737000" />
+      <workItem from="1513868723208" duration="4767000" />
     </task>
     <task id="LOCAL-00001" summary="TP5: to 2.4">
       <created>1510329347131</created>
@@ -1065,7 +1056,14 @@
       <option name="project" value="LOCAL" />
       <updated>1512140461578</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="TP6: to 11.1">
+      <created>1513873477095</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1513873477095</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1101,11 +1099,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="151751000" />
+    <option name="totallyTimeSpent" value="151781000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="31" width="1922" height="1004" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1122,7 +1119,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24758843" sideWeight="0.4978701" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17083333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17083333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24946696" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1149,7 +1146,8 @@
     <MESSAGE value="TP5: to 2.4" />
     <MESSAGE value="TP5: to 4.2" />
     <MESSAGE value="TP6: to 6.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="TP6: to 6.3" />
+    <MESSAGE value="TP6: to 11.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="TP6: to 11.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
