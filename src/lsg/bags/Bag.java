@@ -119,6 +119,9 @@ public class Bag {
      * @param into Le sac de destination
      */
     public static void transfer(Bag from, Bag into) {
+        if (from == null || into == null) {
+            return;
+        }
         for (Collectible toTransfert : from.getItems()) {
                 into.push(toTransfert);
             if (into.contains(toTransfert))

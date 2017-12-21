@@ -11,9 +11,7 @@ import lsg.characters.Monster;
 import lsg.consumables.Consumable;
 import lsg.consumables.MenuBestOfV4;
 import lsg.consumables.food.Hamburger;
-import lsg.exceptions.StaminaEmptyException;
-import lsg.exceptions.WeaponBrokenException;
-import lsg.exceptions.WeaponNullException;
+import lsg.exceptions.*;
 import lsg.weapons.Claw;
 import lsg.weapons.Sword;
 import lsg.weapons.Weapon;
@@ -73,13 +71,13 @@ public class LearningSoulsGame {
                         attack = hero.attack();
                     } catch (WeaponNullException e) {
                         attack = 0;
-                        System.out.println("WARNING : no weapon has been equiped !!!");
+                        System.out.println("WARNING : no weapon has been equiped !!!\n");
                     } catch (WeaponBrokenException e) {
                         attack = 0;
-                        System.out.println("WARNING : " + e.getMessage());
+                        System.out.println("WARNING : " + e.getMessage() + "\n");
                     } catch (StaminaEmptyException e) {
                         attack = 0;
-                        System.out.println("ACTION HAS NO EFFECT: no more stamina !!!");
+                        System.out.println("ACTION HAS NO EFFECT: no more stamina !!!\n");
                     }
 
                     damage = monster.getHitWith(attack);
@@ -87,7 +85,15 @@ public class LearningSoulsGame {
                     System.out.println("\n" + hero.getName() + " attacks " + monster.getName() + " with " + hero.getWeapon() + " (ATTACK:" + attack + " | DMG : " + damage + ")\n");
                 }
                 else if (action == 2) {
-                    hero.consume();
+                    try {
+                        hero.consume();
+                    } catch (ConsumeNullException e) {
+                        System.out.println("IMPOSSIBLE ACTION : no consumable has been equiped !\n");
+                    } catch (ConsumeEmptyException e) {
+                        System.out.println("ACTION HAS NO EFFECT: " + hero.getConsumable() + " is empty !\n");
+                    } catch (ConsumeRepairNullWeaponException e) {
+                        System.out.println("IMPOSSIBLE ACTION : no weapon has been equiped !\n");
+                    }
                 }
                 heroTurn = false;
             }
@@ -96,13 +102,13 @@ public class LearningSoulsGame {
                     attack = monster.attack();
                 } catch (WeaponNullException e) {
                     attack = 0;
-                    System.out.println("WARNING : no weapon has been equiped !!!");
+                    System.out.println("WARNING : no weapon has been equiped !!!\n");
                 } catch (WeaponBrokenException e) {
                     attack = 0;
-                    System.out.println("WARNING : " + e.getMessage());
+                    System.out.println("WARNING : " + e.getMessage() + "\n");
                 } catch (StaminaEmptyException e) {
                     attack = 0;
-                    System.out.println("ACTION HAS NO EFFECT: no more stamina !!!");
+                    System.out.println("ACTION HAS NO EFFECT: no more stamina !!!\n");
                 }
 
                 damage = hero.getHitWith(attack);

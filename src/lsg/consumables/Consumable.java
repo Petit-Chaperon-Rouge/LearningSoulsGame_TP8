@@ -1,6 +1,7 @@
 package lsg.consumables;
 
 import lsg.bags.Collectible;
+import lsg.exceptions.ConsumeEmptyException;
 
 /**
  * Created by alecoeuc on 07/11/17.
@@ -43,10 +44,15 @@ public class Consumable implements Collectible {
     // Méthodes
 
 
-    public int use(){
-        int saveCapacity = this.getCapacity();
-        this.setCapacity(0);
-        return saveCapacity;
+    public int use() throws  ConsumeEmptyException {
+        if (this.getCapacity() == 0) {
+            throw new ConsumeEmptyException(this);
+        }
+        else {
+            int saveCapacity = this.getCapacity();
+            this.setCapacity(0);
+            return saveCapacity;
+        }
     }
 
     @Override

@@ -7,9 +7,7 @@ import lsg.consumables.Consumable;
 import lsg.consumables.drinks.Drink;
 import lsg.consumables.food.Food;
 import lsg.consumables.repair.RepairKit;
-import lsg.exceptions.StaminaEmptyException;
-import lsg.exceptions.WeaponBrokenException;
-import lsg.exceptions.WeaponNullException;
+import lsg.exceptions.*;
 import lsg.helpers.Dice;
 import lsg.weapons.Weapon;
 
@@ -318,48 +316,62 @@ public abstract class Character {
      * Remonte la vie du personnage en utilisant une boisson
      * @param drink La boisson à utiliser
      */
-    private void drink(Drink drink) {
-        System.out.println(this.getName() + " drinks " + drink.toString());
-
-        int newStamina = this.getStamina()+drink.use();
-        if (newStamina > this.getMaxStamina()) {
-            newStamina = this.getMaxStamina();
+    private void drink(Drink drink) throws ConsumeNullException, ConsumeEmptyException {
+        if (drink == null) {
+            throw new ConsumeNullException(drink);
         }
-        this.setStamina(newStamina);
+        else {
+            System.out.println(this.getName() + " drinks " + drink.toString());
+
+            int newStamina = this.getStamina() + drink.use();
+            if (newStamina > this.getMaxStamina()) {
+                newStamina = this.getMaxStamina();
+            }
+            this.setStamina(newStamina);
+        }
     }
 
     /**
      * Remonte la vie du personnage en utilisant de la nourriture
      * @param food La nourriture à utiliser
      */
-    private void eat(Food food) {
-        System.out.println(this.getName() + " eats " + food.toString());
-
-        int newLife = this.getLife()+food.use();
-        if (newLife > this.getMaxLife()){
-            newLife = this.getMaxLife();
+    private void eat(Food food) throws ConsumeNullException, ConsumeEmptyException {
+        if (food == null) {
+            throw new ConsumeNullException(food);
         }
-        this.setLife(newLife);
+        else {
+            System.out.println(this.getName() + " eats " + food.toString());
+
+            int newLife = this.getLife() + food.use();
+            if (newLife > this.getMaxLife()) {
+                newLife = this.getMaxLife();
+            }
+            this.setLife(newLife);
+        }
     }
 
-    public void use(Consumable consumable) {
-        if (consumable instanceof Drink){
-            this.drink((Drink)consumable);
-        }
-        else if (consumable instanceof Food){
-            this.eat((Food)consumable);
-        }
+    public void use(Consumable consumable) throws ConsumeNullException, ConsumeEmptyException, ConsumeRepairNullWeaponException {
 
-        else if (consumable instanceof RepairKit){
-            try {
-                this.repairWeaponWith((RepairKit)consumable);
-            } catch (WeaponNullException e) {
-                e.printStackTrace();
+        if (consumable == null) {
+            throw new ConsumeNullException(consumable);
+        }
+        else {
+
+            if (consumable instanceof Drink) {
+                this.drink((Drink) consumable);
+            } else if (consumable instanceof Food) {
+                this.eat((Food) consumable);
+            } else if (consumable instanceof RepairKit) {
+                try {
+                    this.repairWeaponWith((RepairKit) consumable);
+                } catch (WeaponNullException e) {
+                    throw new ConsumeRepairNullWeaponException(consumable);
+                }
             }
         }
     }
 
-    private void repairWeaponWith(RepairKit kit) throws WeaponNullException {
+    private void repairWeaponWith(RepairKit kit) throws WeaponNullException, ConsumeNullException {
 
         if (this.getWeapon()==null)
             throw new WeaponNullException();
@@ -371,7 +383,7 @@ public abstract class Character {
     /**
      * Permet au personnage d'utiliser le consommable équipé
      */
-    public void consume() {
+    public void consume() throws ConsumeNullException, ConsumeEmptyException, ConsumeRepairNullWeaponException {
         this.use(this.getConsumable());
     }
 
@@ -429,7 +441,7 @@ public abstract class Character {
      * Fouille le sac à la recherche du premier consommable d'instance de la classe de type et le consomme
      * @param type Défini l'instance de la classe du consommable à récupérer
      */
-    private Consumable fastUseFirst(Class<? extends Consumable> type) {
+    private Consumable fastUseFirst(Class<? extends Consumable> type) throws ConsumeNullException, ConsumeEmptyException, ConsumeRepairNullWeaponException {
         Consumable toReturn = null;
 
         System.out.println(this.getName() + " eats FAST :");
@@ -448,23 +460,33 @@ public abstract class Character {
      * Consomme la 1ère boisson trouvée dans le sac
      * @return La boisson trouvée
      */
-    public Drink fastDrink() {
-        return (Drink)this.fastUseFirst(Drink.class);
+    public Drink fastDrink() throws ConsumeNullException, ConsumeEmptyException {
+        Drink toReturn = null;
+        try {
+            toReturn = (Drink) this.fastUseFirst(Drink.class);
+        } catch (ConsumeRepairNullWeaponException e) {}
+
+        return toReturn;
     }
 
     /**
      * Consomme la 1ère nourriture trouvée dans le sac
      * @return La nourriture trouvée
      */
-    public Food fastEat() {
-        return (Food)this.fastUseFirst(Food.class);
+    public Food fastEat() throws ConsumeNullException, ConsumeEmptyException {
+        Food toReturn = null;
+        try {
+            toReturn = (Food) this.fastUseFirst(Food.class);
+        } catch (ConsumeRepairNullWeaponException e) {}
+
+        return toReturn;
     }
 
     /**
      * Consomme 1 charge du 1er kit trouvé dans le sac
      * @return Le kit trouvé
      */
-    public RepairKit fastRepair() {
+    public RepairKit fastRepair() throws ConsumeNullException, ConsumeEmptyException, ConsumeRepairNullWeaponException {
         return (RepairKit)this.fastUseFirst(RepairKit.class);
     }
 
